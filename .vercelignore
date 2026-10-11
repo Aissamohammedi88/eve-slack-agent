@@ -1,11 +1,893 @@
+# ═══════════════════════════════════════════════════════════════════════════# 🚫 .vercelignore — NEXUS AGENT
+# ═══════════════════════════════════════════════════════════════════════════
+# Ce fichier empêche Vercel d'envoyer certains fichiers/dossiers
+# lors du déploiement. Réduit la taille du build, accélère le deploy,
+# et évite d'exposer des fichiers sensibles.
+#
+# Auteur : Aissa Mohammedi (DGK)
+# Version : 1.0.0
+# Lignes : ~600
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📦 DÉPENDANCES (jamais déployées, réinstallées par Vercel)
+# ───────────────────────────────────────────────────────────────────────────
 node_modules/
+node_modules
+**/node_modules/
+**/node_modules
+*/node_modules/
+*/node_modules
+
+# Gestionnaires de paquets
+.pnpm-store/
+.pnpm-store
+.pnpm/
+.yarn/
+.yarn
+.npm/
+.npm
+.bun/
+.bun
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+bun.lockb
+.npmrc
+.yarnrc
+.yarnrc.yml
+pnpm-workspace.yaml
+
+# Caches de gestionnaires
+.cache/
+.cache
+.npm-cache/
+.yarn-cache/
+.pnpm-cache/
+.node-gyp/
+.node-gyp
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🏗️ BUILDS ET DIST
+# ───────────────────────────────────────────────────────────────────────────
 dist/
-.env
-.env.local
-*.log
+dist
+build/
+build
+out/
+out
+.next/
+.next
+.nuxt/
+.nuxt
+.output/
+.output
+.vercel/
+.vercel
+.turbo/
+.turbo
+.parcel-cache/
+.parcel-cache
+.cache/
+.cache
 coverage/
-.git
-.github
+coverage
+.nyc_output/
+.nyc_output
+
+# Artefacts de build spécifiques
+*.tsbuildinfo
+*.tsbuildinfo.*
+.next/cache/
+.next/trace
+.nuxt/dist/
+.output/public/
+.vercel/output/
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🔐 SECRETS ET CONFIGURATION SENSIBLE
+# ───────────────────────────────────────────────────────────────────────────
+.env
+.env.*
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env.staging
+.env.staging.local
+*.env
+*.env.local
+!.env.example
+
+# Secrets et clés
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+secrets
+.credentials/
+.credentials
+credentials.json
+service-account.json
+serviceAccountKey.json
+firebase-admin.json
+.secret/
+.secret
+config.secret.json
+private.key
+public.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Tokens
+.token
+.tokens
+*.token
+tokens.json
+auth.json
+oauth.json
+session.json
+cookies.txt
+.npmrc.local
+.vercel/.env*
+.vercel/project.json
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🗄️ BASES DE DONNÉES ET STOCKAGE LOCAL
+# ───────────────────────────────────────────────────────────────────────────
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.mdb
+*.accdb
+*.dbf
+*.fdb
+*.gdb
+data/
+data
+database/
+database
+databases/
+databases
+db/
+db
+storage/
+storage
+uploads/
+uploads
+media/
+media
+files/
+files
+*.dump
+*.sql.gz
+*.sql.bz2
+backup.sql
+backups/
+backups
+
+# NEXUS specific
+nexus.db
+nexus_memory.db
+nexus_*.db
+*.nexus
+nexus_cache/
+nexus_data/
+nexus_logs/
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📝 LOGS
+# ───────────────────────────────────────────────────────────────────────────
+logs/
+logs
+log/
+log
+*.log
+*.log.*
+*.log.gz
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.npm/_logs/
+.yarn/_logs/
+.pnpm-debug.log
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🐍 PYTHON
+# ───────────────────────────────────────────────────────────────────────────
+__pycache__/
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+env
+venv/
+venv
+ENV/
+ENV
+.venv/
+.venv
+pythonenv/
+pythonenv
+build/
+build
+develop-eggs/
+develop-eggs
+dist/
+dist
+downloads/
+downloads
+eggs/
+eggs
+.eggs/
+.eggs
+lib64/
+lib64
+parts/
+parts
+sdist/
+sdist
+var/
+var
+wheels/
+wheels
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.tox
+.nox/
+.nox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.hypothesis
+.pytest_cache/
+.pytest_cache
+.mypy_cache/
+.mypy_cache
+.dmypy.json
+dmypy.json
+.pyre/
+.pyre
+pyrightconfig.json
+
+# Jupyter
+.ipynb_checkpoints/
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🟢 NODE / JAVASCRIPT
+# ───────────────────────────────────────────────────────────────────────────
+.eslintcache
+.eslintcache
+.node_repl_history
+.node_repl_history
+*.tgz
+*.tsbuildinfo
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.svelte-kit/
+.vercel/
+web_modules/
+.pnp.*
+.pnp.cjs
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🦀 RUST
+# ───────────────────────────────────────────────────────────────────────────
+target/
+target
+Cargo.lock
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🐹 GO
+# ───────────────────────────────────────────────────────────────────────────
+*.exe
+*.exe~
+*.dll
+*.dylib
+*.test
+*.out
+vendor/
+
+# ───────────────────────────────────────────────────────────────────────────
+# ☕ JAVA
+# ───────────────────────────────────────────────────────────────────────────
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+.gradle/
+.gradle
+build/
+build
+!gradle/wrapper/gradle-wrapper.jar
+target/
+target
+*.iml
+.idea/
+.idea
+
+# ───────────────────────────────────────────────────────────────────────────
+# 💎 RUBY
+# ───────────────────────────────────────────────────────────────────────────
+*.gem
+*.rbc
+.bundle/
+.bundle
+.config/
+.config
+.yardoc/
+.yardoc
+tmp/
+tmp
+vendor/bundle/
+vendor/bundle
+vendor/cache/
+vendor/cache
+vendor/gems/
+vendor/gems
+vendor/ruby/
+vendor/ruby
+Gemfile.lock
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🎯 C / C++
+# ───────────────────────────────────────────────────────────────────────────
+*.o
+*.obj
+*.a
+*.lib
+*.out
+*.elf
+*.bin
+*.hex
+*.map
+*.d
+*.gch
+*.pch
+*.i
+*.ii
+*.s
+*.S
+*.mod
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🔧 ÉDITEURS ET IDE
+# ───────────────────────────────────────────────────────────────────────────
+.vscode/
+.vscode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+.idea
+*.swp
+*.swo
+*.swn
+*~
+.*.swp
+.*.swo
+*.orig
+*.rej
+.history/
+.history
+.fleet/
+.fleet
+.directory
+.directory
+*.sublime-project
+*.sublime-workspace
+.atom/
+.atom
+.nvim/
+.nvim
+.emacs.d/
+.emacs.d
+.zed/
+.zed
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🍎 macOS
+# ───────────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.NetworkTrash
+.Icon?
+.dbfseventsd
+.DocumentRevisions-V100
+.PKInstallSandboxManager
+.PKInstallSandboxManager-SystemSoftware
+.apdisk
+AppleDouble
+.LSOverride
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🪟 WINDOWS
+# ───────────────────────────────────────────────────────────────────────────
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🐧 LINUX
+# ───────────────────────────────────────────────────────────────────────────
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📱 MOBILE / iOS / ANDROID
+# ───────────────────────────────────────────────────────────────────────────
+*.ipa
+*.apk
+*.aab
+*.mobileprovision
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Pods/
+.build/
+.gradle/
+captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🐳 DOCKER
+# ───────────────────────────────────────────────────────────────────────────
+.dockerignore
+docker-compose.override.yml
+.docker/
+.docker
+docker-compose.yml
+Dockerfile
+Dockerfile.*
+
+# ───────────────────────────────────────────────────────────────────────────
+# ☸️ KUBERNETES / INFRA
+# ───────────────────────────────────────────────────────────────────────────
+k8s/
+k8s
+kubernetes/
+kubernetes
+helm/
+helm
+charts/
+charts
+terraform/
+terraform
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform
+.terraform.lock.hcl
+ansible/
+ansible
+*.retry
+inventory/
+inventory
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🧪 TESTS ET COUVERTURE
+# ───────────────────────────────────────────────────────────────────────────
+test/
+test
 tests/
+tests
+__tests__/
+__tests__
 *.test.ts
+*.test.tsx
+*.test.js
+*.test.jsx
 *.spec.ts
+*.spec.tsx
+*.spec.js
+*.spec.jsx
+*.test.py
+*.spec.py
+e2e/
+e2e
+cypress/
+cypress
+playwright/
+playwright
+.jest/
+.jest
+jest.config.js
+jest.config.ts
+vitest.config.ts
+karma.conf.js
+cypress.config.js
+playwright.config.ts
+__snapshots__/
+__mocks__/
+fixtures/
+fixtures
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📊 CI/CD
+# ───────────────────────────────────────────────────────────────────────────
+.github/
+.github
+.gitlab-ci.yml
+.gitlab/
+.gitlab
+.travis.yml
+.travis.yml
+circle.yml
+.circleci/
+.circleci
+Jenkinsfile
+azure-pipelines.yml
+bitbucket-pipelines.yml
+.appveyor.yml
+.drone.yml
+.codefresh/
+.buildkite/
+.teamcity/
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📚 DOCUMENTATION
+# ───────────────────────────────────────────────────────────────────────────
+docs/
+docs
+documentation/
+documentation
+*.md
+!README.md
+!LICENSE.md
+!CHANGELOG.md
+!CONTRIBUTING.md
+!SECURITY.md
+!CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+LICENSE.md
+LICENSE
+AUTHORS
+CONTRIBUTORS
+
+# Diagrammes
+*.drawio
+*.drawio.bkp
+*.vsdx
+*.mermaid
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🧬 NEXUS SPECIFIC
+# ───────────────────────────────────────────────────────────────────────────
+.nexus/
+.nexus
+nexus_home/
+nexus_home
+nexus_agent/
+nexus_agent
+nexus_sandbox/
+nexus_sandbox
+nexus_memory/
+nexus_memory
+nexus_tools/
+nexus_tools
+nexus_skills/
+nexus_skills
+nexus_logs/
+nexus_logs
+nexus_cache/
+nexus_cache
+nexus_data/
+nexus_data
+nexus_projects/
+nexus_projects
+nexus_build/
+nexus_build
+nexus_*.json
+nexus_*.yaml
+nexus_*.yml
+nexus_*.log
+nexus_*.db
+nexus_state.json
+nexus_alerts.json
+nexus_config.local.json
+agent_state.json
+agent_memory.json
+skills/*.local.md
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🎨 MÉDIA ET ASSETS
+# ───────────────────────────────────────────────────────────────────────────
+*.psd
+*.ai
+*.xd
+*.sketch
+*.fig
+*.afdesign
+*.afphoto
+*.aseprite
+*.blend
+*.blend1
+*.fbx
+*.obj
+*.mtl
+*.3ds
+*.max
+*.c4d
+*.unity
+*.unitypackage
+*.uasset
+*.upk
+*.umap
+
+# Vidéos
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+*.wmv
+*.m4v
+*.mpg
+*.mpeg
+*.3gp
+
+# Audio (sauf si nécessaire)
+*.wav
+*.flac
+*.alac
+*.aiff
+*.ape
+*.wv
+*.m4a
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🗜️ ARCHIVES
+# ───────────────────────────────────────────────────────────────────────────
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.tar.xz
+*.txz
+*.7z
+*.rar
+*.gz
+*.bz2
+*.xz
+*.lz
+*.lzma
+*.zst
+*.br
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📄 FICHIERS TEMPORAIRES
+# ───────────────────────────────────────────────────────────────────────────
+tmp/
+tmp
+temp/
+temp
+.temp/
+.temp
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.rejected
+*.pending
+*.pid
+*.seed
+*.cache
+*.log.*
+*~
+.$*
+.DS_Store*
+._*
+.AppleDouble
+.LSOverride
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🔒 FICHIERS DE SÉCURITÉ
+# ───────────────────────────────────────────────────────────────────────────
+.gnupg/
+.gnupg
+.ssh/
+.ssh
+.aws/
+.aws
+.azure/
+.azure
+.gcp/
+.gcp
+.kube/
+.kube
+.docker/
+.docker
+.git-credentials
+.gitconfig.local
+.gpg
+.gpg-agent
+.sia/
+.sia
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📋 CONFIGURATIONS LOCALES
+# ───────────────────────────────────────────────────────────────────────────
+*.local
+*.local.json
+*.local.yaml
+*.local.yml
+*.local.env
+*.local.config
+local.config.json
+config.local.json
+settings.local.json
+workspace.json
+workspace.code-workspace
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🎯 SPECIFIC VERCEL
+# ───────────────────────────────────────────────────────────────────────────
+.vercel/project.json
+.vercel/README.txt
+.vercel/output/
+.vercel/.env*
+.now/
+.now
+vercel.json.local
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🌐 SPECIFIC EVE / SLACK AGENT
+# ───────────────────────────────────────────────────────────────────────────
+agent/local/
+agent/playground/
+agent/debug/
+agent/sandbox/
+agent/tmp/
+evals/results/
+evals/snapshots/
+schedules/local/
+channels/local/
+connections/local/
+subagents/local/
+.agent/
+.eve/
+.eve-cache/
+eve_local/
+eve_debug/
+slack_agent_local/
+slack_tokens.json
+slack_local.json
+
+# ───────────────────────────────────────────────────────────────────────────
+# 📊 ANALYSE ET MÉTRIQUES
+# ───────────────────────────────────────────────────────────────────────────
+.bundle-analyzer/
+.bundle-analyzer
+stats.json
+metrics.json
+analytics.json
+telemetry.json
+.reports/
+.reports
+reports/local/
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🎓 ÉDUCATION / FORMATION
+# ───────────────────────────────────────────────────────────────────────────
+courses/
+courses
+training/
+training
+datasets/
+datasets
+*.ipynb
+notebooks/
+notebooks
+
+# ───────────────────────────────────────────────────────────────────────────
+# 🏗️ SCAFFOLDING / TEMPLATES
+# ───────────────────────────────────────────────────────────────────────────
+.scaffold/
+.scaffold
+templates/local/
+generators/local/
+.boilerplate/
+.boilerplate
+
+# ───────────────────────────────────────────────────────────────────────────
+# ✨ FIN DU .vercelignore
+# ═══════════════════════════════════════════════════════════════════════════
+# Ce fichier empêche Vercel de déployer tout ce qui ne sert pas à la prod.
+#
+# Résultat :
+# ✓ Build plus rapide
+# ✓ Deploy plus léger
+# ✓ Secrets protégés
+# ✓ Focus sur l'essentiel
+#
+# Auteur : Aissa Mohammedi (DGK)
+# ═══════════════════════════════════════════════════════════════════════════
