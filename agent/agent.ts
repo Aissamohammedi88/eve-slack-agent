@@ -1,8 +1,3 @@
-import { defineAgent } from "eve";
-
-export default defineAgent({
-  model: "anthropic/claude-sonnet-5",
-});
 /**
 EVE Agent — Logique principale
 Aissa Mohammedi (DGK) */
