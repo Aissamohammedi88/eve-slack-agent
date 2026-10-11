@@ -11,3 +11,4 @@
   },
   "include": ["agent/**/*.ts", "evals/**/*.ts", ".eve/**/*.d.ts"]
 }
+{ "compilerOptions": { "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "lib": ["ES2022"], "strict": true, "esModuleInterop": true, "skipLibCheck": true, "forceConsistentCasingInFileNames": true, "resolveJsonModule": true, "allowSyntheticDefaultImports": true, "isolatedModules": true, "noEmit": true, "baseUrl": ".", "paths": { "@skills/": ["skills/"], "@tools/": ["tools/"], "@channels/": ["channels/"] } }, "include": ["**/*.ts"], "exclude": ["node_modules", "dist"] }
