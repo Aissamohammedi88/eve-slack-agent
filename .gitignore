@@ -10,3 +10,23 @@ dist
 .DS_Store
 *.tsbuildinfo
 .env*.local
+eve├-slack-agent/
+├── .gitignore
+├── .vercel──ignore
+├── AGENTS slack.md
+├── CLAUDE.ts.md
+├── README.md
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── tsconfig.json
+├── agent.ts
+├── instructions.md
+├── channels/
+│   └── index.ts
+├── skills/
+│   ├── plan_a_trip.md
+│   └── index.ts
+└── tools/
+    ├── get_weather.ts
+    └── index.ts
