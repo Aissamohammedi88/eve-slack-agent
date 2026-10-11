@@ -1,25 +1,29 @@
 {
-  "name": "eve-slack-agent-template",
-  "version": "0.0.0",
+  "name": "eve-slack-agent",
+  "version": "1.0.0",
+  "description": "Agent Slack EVE — skills + tools",
   "type": "module",
-  "imports": {
-    "#*": "./agent/*",
-    "#evals/*": "./evals/*"
-  },
+  "main": "slack.ts",
   "scripts": {
-    "build": "eve build",
-    "dev": "eve dev",
-    "start": "eve start",
-    "typecheck": "tsc"
+    "start": "tsx slack.ts",
+    "agent": "tsx agent.ts",
+    "dev": "tsx watch slack.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
-    "@vercel/connect": "0.8.0",
-    "ai": "7.0.70",
-    "eve": "^0.39.3",
-    "zod": "4.4.3"
+    "@slack/bolt": "^3.19.0",
+    "@slack/web-api": "^7.3.0",
+    "@vercel/node": "^3.2.0",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "^25.9.3",
-    "typescript": "7.0.2"
+    "@types/node": "^20.14.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
