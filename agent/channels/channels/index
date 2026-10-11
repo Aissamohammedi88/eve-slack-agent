@@ -1,0 +1,11 @@
+/**
+Channels Router — Route les messages par channel Slack
+Aissa Mohammedi (DGK) */
+export interface ChannelConfig { name: string; agent?: string; skills?: string[]; tools?: string[]; welcome?: string; language?: "fr" | "en"; maxTokens?: number; }
+// ═══════════════════════════════════════════════════════════════════ // CONFIGURATION DES CHANNELS // ═══════════════════════════════════════════════════════════════════ const CHANNELS: Record<string, ChannelConfig> = { // Channel par défaut default: { name: "default", agent: "EVE", skills: ["plan_a_trip"], tools: ["get_weather"], welcome: "Bienvenue sur EVE !", language: "fr", maxTokens: 2048, },
+// Channels spécialisés (à personnaliser avec tes vrais IDs) "C00000001": { name: "general", agent: "EVE", skills: ["plan_a_trip"], tools: ["get_weather"], welcome: "Channel général — EVE à votre service.", language: "fr", maxTokens: 2048, },
+"C00000002": { name: "travel", agent: "EVE-TRAVEL", skills: ["plan_a_trip"], tools: ["get_weather"], welcome: "Channel voyage — planification assistée.", language: "fr", maxTokens: 4096, },
+"C00000003": { name: "dev", agent: "EVE-DEV", skills: [], tools: [], welcome: "Channel dev — assistance technique.", language: "en", maxTokens: 8192, }, };
+// ═══════════════════════════════════════════════════════════════════ // ROUTING // ═══════════════════════════════════════════════════════════════════ export function routeChannel(channelId: string): ChannelConfig { return CHANNELS[channelId] || CHANNELS.default; }
+export function listChannels(): string[] { return Object.keys(CHANNELS); }
+export function getChannelConfig(id: string): ChannelConfig | undefined { return CHANNELS[id]; }
