@@ -1,6 +1,11 @@
-node_modules
-.eve
-.next
-.output
-.nitro
-dist
+node_modules/
+dist/
+.env
+.env.local
+*.log
+coverage/
+.git
+.github
+tests/
+*.test.ts
+*.spec.ts
