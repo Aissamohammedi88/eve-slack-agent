@@ -1,389 +1,228 @@
-# 🌤️ WEATHER EVE — Agent Slack interactif qui vit
-<div align="center">
+[![Build status](https://gitlab.com/gnuwget/wget2/badges/master/pipeline.svg)](https://gitlab.com/gnuwget/wget2/pipelines)
+[![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/wget2.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:wget2)
+[![Coverage status](https://gnuwget.gitlab.io/wget2/fuzz-coverage.svg)](https://gnuwget.gitlab.io/wget2/fuzz-coverage)
+[![Coverage status](https://gnuwget.gitlab.io/wget2/coverage.svg)](https://gnuwget.gitlab.io/wget2/coverage)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/7852/badge.svg)](https://scan.coverity.com/projects/rockdaboot-wget2)
+
+# Table of Content
+- [GNU Wget2 - Introduction](#gnu-wget2---introduction)
+- [Features](#features)
+- [Links](#links)
+- [Build Requirements](#build-requirements)
+- [Downloading and building from tarball](#downloading-and-building-from-tarball)
+- [Building from git](#building-from-git)
+  - [Download project and prepare sources with](#download-project-and-prepare-sources-with)
+  - [Build Wget2 with](#build-wget2-with)
+  - [In Haiku build Wget2 with](#in-haiku-build-wget2-with)
+  - [Test the functionality](#test-the-functionality)
+  - [Install Wget2 and libwget](#install-wget2-and-libwget)
+  - [Build static wget2.exe on GNU/Linux for Windows](#build-static-wget2exe-on-gnulinux-for-windows)
+- [License](#license)
+
+# GNU Wget2 - Introduction
+
+GNU Wget2 is the successor of GNU Wget, a file and recursive website downloader.
+
+Designed and written from scratch it wraps around libwget, that provides the basic
+functions needed by a web client.
+
+Wget2 works multi-threaded and uses many features to allow fast operation.
+
+In many cases Wget2 downloads much faster than Wget1.x due to HTTP2, HTTP compression,
+parallel connections and use of If-Modified-Since HTTP header.
+
+GNU Wget2 is licensed under GPLv3+.
+
+Libwget is licensed under LGPLv3+.
+
+
+# Features
+
+A non-exhaustive list of features
+
+- Support for HTTP/1.1 and HTTP/2.0 protocol
+- [brotli](https://github.com/google/brotli) decompression support (Accept-Encoding: br)
+- [zstandard](https://github.com/facebook/zstd) decompression support, RFC8478 (Accept-Encoding: zstd)
+- [lzip](https://www.nongnu.org/lzip/) decompression support, (Accept-Encoding: lzip)
+- HPKP - HTTP Public Key Pinning (RFC7469) with persistent database
+- TCP Fast Open for plain text *and* for HTTPS
+- TLS Session Resumption including persistent session data cache
+- TLS False Start (with GnuTLS >= 3.5.0)
+- HTTP2 support via nghttp2 and GnuTLS ALPN including streaming/pipelining
+- OCSP stapling + OCSP server querying as a fallback (experimental, needs GnuTLS >= 3.3.11)
+- Use [libpsl](https://github.com/rockdaboot/libpsl) for cookie domain checking (using Public Suffix List)
+- Support link conversion (-k/--convert-links and -K/--backup-converted)
+- Support for RFC 6266 compliant Content-Disposition
+- RFC 6797 HSTS (HTTP Strict Transport Security)
+- Support for bzip2 Content-Encoding / Accept-Encoding compression type
+- New Year 2014 gimmick: added support for XZ Content-Encoding / Accept-Encoding compression type
+- Character encoding of input files may be specified despite from local and remote encoding (--input-encoding)
+- Support scanning RSS 2.0 feeds from local files (`--force-rss -i <filename>`)
+- Support scanning RSS 2.0 feeds.
+- Support scanning Atom 1.0 feeds from local files (`--force-atom -i <filename>`)
+- Support scanning Atom 1.0 feeds.
+- Support scanning URLs from local Sitemap XML file (`--force-sitemap -i <filename>`)
+- Support scanning sitemap files given in robots.txt (Sitemap XML, gzipped Sitemap XML, plain text) including
+sitemap index files.
+- Support arbitrary number of proxies for parallel downloads
+- Multithreaded download of single files (option --chunk-size)
+- Internationalized Domain Names in Applications (compile-selectable IDNA2008 or IDNA2003)
+- ICEcast / SHOUTcast support via library (see examples/getstream.c)
+- respect /robots.txt "Robot Exclusion Standard" and `<META name="robots" ...>`
+- new option --secure-protocol=PFS to have TLS only plus forcing Perfect Forward Secrecy (PFS)
+- IDN support for international domains
+- autotools support
+- proxy support
+- cookies (session/non-session), detection of supercookies via Mozilla Public Suffix List
+  (use the new option `--cookie-suffixes <filename>`, better: put it into ~/.wgetrc)
+- recursive download of websites with or without spanning hosts
+- download of single web pages / resources
+- zlib/gzip compressed HTTP/HTTPS downloads (gzip, deflate)
+- number of parallel download threads is adjustable
+- include directive for config files (wildcards allowed)
+- support for keep-alive connections
+- included CSS, HTML, XML parser needed for recursive downloads
+- gettext support
+- HTTPS via libgnutls (and basic WolfSSL support)
+- support for Metalink RFC 6249 (Metalink/HTTP: Mirrors and Hashes)
+- support for Metalink RFC 5854 (Metalink Download Description Format / .meta4 files)
+- support for Metalink 3
+- Metalink checksumming via libgnutls
+- DNS lookup cache
+- IPv4 and IPv6 support
+- built and tested on Linux, OSX, OpenBSD, FreeBSD, Solaris, Windows
+
+
+# Links
+
+[Online Docs](https://gnuwget.gitlab.io/wget2/reference/)
+
+[Mailing List](https://savannah.gnu.org/mail/?group=wget)
+
+[Bug Tracker](https://gitlab.com/gnuwget/wget2/issues)
 
-**Un agent Slack qui ne se contente pas de répondre. Il agit, réagit, anticipe, et vit.**
+[Development](https://gitlab.com/gnuwget/wget2)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?connect=%5B%7B%22type%22%3A%22slack%22%2C%22env%22%3A%22SLACK_CONNECTOR%22%2C%22triggers%22%3Atrue%2C%22triggerPath%22%3A%22%2Feve%2Fv1%2Fslack%22%7D%5D&demo-title=Weather%20EVE%20Interactif&project-name=weather-eve&repository-name=weather-eve&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Feve-examples%2Ftree%2Fmain%2Feve-slack-agent-template)
+[Code Coverage](https://gnuwget.gitlab.io/wget2/coverage/)
 
-[![eve](https://img.shields.io/badge/eve-latest-blue)](https://eve.dev)
-[![Slack](https://img.shields.io/badge/Slack-live-4A154B)](https://slack.com)
-[![Realtime](https://img.shields.io/badge/realtime-WebSocket-green)](https://slack.com)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[Fuzz Code Coverage](https://gnuwget.gitlab.io/wget2/fuzz-coverage/)
 
-</div>
 
----
+# Build Requirements
 
-## 🎬 Regarde-le vivre
+The following packages are needed to build the software
 
-### 1. Tu mentionnes @weather — il RÉAGIT tout de suite
+* autotools (autoconf, autogen, automake, autopoint, libtool)
+* python (recommended for faster bootstrap)
+* rsync
+* tar
+* makeinfo (part of texinfo)
+* pkg-config >= 0.28 (recommended)
+* doxygen (for creating the documentation)
+* pandoc (for creating the wget2 man page)
+* gettext >= 0.18.2
+* libiconv (needed for IRI and IDN support)
+* libz >= 1.2.3 (the distribution may call the package zlib*, eg. zlib1g on Debian)
+* liblzma >= 5.1.1alpha (optional, if you want HTTP lzma decompression)
+* libbz2 >= 1.0.6 (optional, if you want HTTP bzip2 decompression)
+* libbrotlidec/libbrotli >= 1.0.0 (optional, if you want HTTP brotli decompression)
+* libzstd >= 1.3.0 (optional, if you want HTTP zstd decompression)
+* libgnutls (3.3, 3.5 or 3.6)
+* libidn2 >= 0.14 (libidn >= 1.25 if you don't have libidn2)
+* flex >= 2.5.35
+* libpsl >= 0.5.0
+* libnghttp2 >= 1.3.0 (optional, if you want HTTP/2 support)
+* libmicrohttpd >= 0.9.51 (optional, if you want to run the test suite)
+* lzip (optional, if you want to build distribution tarballs)
+* lcov (optional, for coverage reports)
+* libgpgme >= 0.4.2 (optional, for automatic signature verification)
+* libpcre | libpcre2 (optional, for filtering by PCRE|PCRE2 regex)
+* libhsts (optional, to support HSTS preload lists)
+* libwolfssl (optional, to support WolfSSL instead of GnuTLS)
 
-Toi : @weather quel temps à Montréal ?
+The versions are recommended, but older versions may also work.
 
-**Ce qui se passe dans les 500ms :**
-- ⚡ Réaction emoji ☀️ sur TON message
-- 💬 Typing indicator "…" dans le channel
-- 🎯 Puis le message complet
 
-☀️ Montréal — 18°C (ressenti 17°C)
-Ciel dégagé · Vent 12 km/h NE · Humidité 65%
+# Downloading and building from tarball
 
-💡 Belle journée — profites-en
+		wget https://gnuwget.gitlab.io/wget2/wget2-latest.tar.gz
+		tar xf wget2-latest.tar.gz
+		cd wget2-*
+		./configure
+		make
+		make check
+		sudo make install
 
-╭─────────────────────────────────────────╮
-│ 🔄 Actualiser 📅 7 jours 📊 Comparer │
-│ ⭐ Favori ⚙️ Options 📍 Localiser │
-╰─────────────────────────────────────────╯
 
-### 2. Tu cliques sur 📅 7 jours — le message SE TRANSFORME
+# Building from git
 
-Pas de nouveau message. **Le même message se met à jour** avec une animation.
+### Download project and prepare sources with
 
-📅 Montréal — 7 prochains jours
+		git clone https://gitlab.com/gnuwget/wget2.git
+		cd wget2
+		./bootstrap
+		# on shell failure try 'bash ./bootstrap'
 
-🟩🟩🟨🟨🟥🟥🟩 ← température sur 7 jours
+### Build Wget2 with
 
-Lun 🌤️ 12° / 19° 💧 20% 💨 15 km/h
-Mar ☀️ 14° / 22° 💧 5% 💨 10 km/h
-Mer 🌧️ 11° / 16° 💧 80% 💨 25 km/h
-Jeu ⛈️ 10° / 15° 💧 95% 💨 40 km/h ⚠️
-Ven 🌧️ 11° / 17° 💧 65% 💨 20 km/h
-Sam 🌤️ 13° / 20° 💧 15% 💨 12 km/h
-Dim ☀️ 15° / 23° 💧 0% 💨 8 km/h
+		./configure
+		make
 
-[🔄 Actualiser] [⭐ Favori] [🔔 Alertes]
+### In Haiku build Wget2 with
 
-### 3. Tu cliques sur 📊 Comparer — un MODAL s'ouvre
+        setarch x86
+        ./configure --prefix=/boot/home/config/non-packaged
+        rm /boot/home/config/non-packaged/wget2 && mv /boot/home/config/non-packaged/wget2_noinstall /boot/home/config/non-packaged/wget2
 
-┌──────────────────────────────────────────┐
-│ 📊 Comparer avec une autre ville │
-├──────────────────────────────────────────┤
-│ │
-│ Ville à comparer │
-│ [ Paris ▼ ] │
-│ │
-│ Unité │
-│ ● Celsius ○ Fahrenheit │
-│ │
-│ Critères │
-│ ☑ Température ☑ Vent ☑ Pluie │
-│ │
-│ [Annuler] [Comparer] │
-└──────────────────────────────────────────┘
+### Test the functionality
 
-### 4. Tu réagis avec ⚠️ sur n'importe quel message
+		make check
 
-L'agent détecte, analyse, et **répond intelligemment** :
+### Install Wget2 and libwget
 
-⚠️ Alerte détectée sur ton message
+		sudo make install (or su -c "make install")
 
-Ta réaction ⚠️ indique une préoccupation.
+### Build static wget2.exe on GNU/Linux for Windows
 
-Que veux-tu faire ?
-[🔔 Voir les alertes météo] [📞 Contacter l'équipe] [❌ Ignorer]
+		(cd contrib; docker build -t wget2/win32/static -f Dockerfile.win32.static .)
+		docker run --rm -v $PWD:/tmp wget2/win32/static cp /usr/local/wget2/src/wget2.exe /tmp
+		sudo chown $USER: wget2.exe
+		# now you have `wget2.exe` with debug symbols in your current directory
+		# optional: remove debug symbols with
+		#   strip wget2.exe   # (needs mingw64 version of `strip`)
+		# optional: pack executable
+		upx wget2.exe
 
-### 5. 7h du matin — il envoie AUTOMATIQUEMENT le rapport
+### Build static wget2 on GNU/Linux for Linux/amd64
 
-🌅 Bonjour Aissa !
+		(cd contrib; docker build -t wget2/static/amd64 -f Dockerfile.musl.static.amd64 .)
+		docker run --rm -v $PWD:/tmp wget2/static/amd64 cp /usr/local/wget2/src/wget2 /tmp
+		sudo chown $USER: wget2
+		# now you have `wget2.exe` with debug symbols in your current directory
+		# optional: remove debug symbols with
+		strip wget2
+		# optional: pack executable
+		upx wget2
 
-Météo du jour :
+# License
 
-☀️ Montréal 18°C Ensoleillé
-🌤️ Paris 22°C Nuageux
-🌧️ Tokyo 16°C Pluvieux
+Copyright (C) 2015-2026 Free Software Foundation, Inc.
 
-⚡ Alerte : Orage prévu à Montréal vers 17h
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
 
-💡 Conseil : Sors ce matin, il pleut à 17h
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-[📅 Ma semaine] [⭐ Gérer favoris] [⚙️ Paramètres]
+A copy of the GNU General Public License can be found in the file LICENSE
+in the top directory of the official source distribution. The license is
+also available in several formats through the World Wide Web, or
+via http://www.gnu.org/licenses/licenses.html#GPL .
 
----
-
-## 🧬 Ce qui le rend VIVANT
-
-| Ce que tu fais | Ce qu'il fait |
-|----------------|---------------|
-| Tu le mentionnes | Réaction emoji instantanée + typing indicator |
-| Tu cliques un bouton | Le message **se transforme** (pas un nouveau) |
-| Tu passes la souris | Menu contextuel s'affiche |
-| Tu réagis à un message | Il analyse ta réaction et agit |
-| Tu quittes Slack | Il continue à surveiller (cron) |
-| Tu reviens 8h après | Il t'accueille avec un résumé |
-| Tu lui demandes la même chose 2x | Il répond instantané (cache) |
-| Tu changes de ville | Il **apprend** tes préférences |
-| Tu parles une autre langue | Il détecte et adapte |
-| Tu es en stress (typos, urgent) | Il priorise ta demande |
-
----
-
-## 🎨 Comment ça fonctionne
-
-### Le canal Slack interactif
-
-```typescript
-// agent/channels/slack.ts
-import { slackChannel } from "eve/channels/slack";
-
-export default slackChannel({
-botName: "weather-eve",
-
-// ─── Vivacité ───
-typingIndicator: true, // "…" pendant qu'il réfléchit
-autoReact: true, // réaction emoji sur tes messages
-presenceAwareness: true, // sait si tu es en ligne
-threads: "smart", // répond en thread si pertinent
-contextWindow: "full", // garde tout le contexte
-
-// ─── Actions en temps réel ───
-interactive: true,
-liveUpdates: true, // ⭐ met à jour SES propres messages
-modals: true,
-shortcuts: true,
-
-// ─── Apprentissage ───
-memory: {
-enabled: true,
-scope: "user", // apprend TES préférences
-persist: "postgres", // stocke dans Postgres
-},
-
-// ─── Commandes slash ───
-slashCommands: [
-{ command: "/weather", description: "Météo d'une ville", usageHint: "[ville]" },
-{ command: "/forecast", description: "Prévisions 7 jours", usageHint: "[ville]" },
-{ command: "/compare", description: "Comparer 2 villes", usageHint: "ville1 ville2" },
-{ command: "/favorites", description: "Gérer tes favoris", usageHint: "" },
-{ command: "/alerts", description: "Alertes météo", usageHint: "" },
-{ command: "/digest", description: "Rapport personnalisé", usageHint: "[heure]" },
-],
-});
-
-Le tool qui rend les actions vivantes
-// agent/tools/get_weather.ts
-import { defineTool } from "eve/tools";
-import { z } from "zod";
-
-export default defineTool({
-description: "Météo actuelle avec actions interactives vivantes",
-
-inputSchema: z.object({
-cityName: z.string(),
-units: z.enum(["metric", "imperial"]).default("metric"),
-lang: z.enum(["fr", "en"]).default("fr"),
-}),
-
-async execute({ cityName, units, lang }) {
-// ... fetch météo ...
-
-return {
-// ─── Données ───
-city: "Montréal",
-temperature: 18,
-condition: "Ciel dégagé",
-icon: "☀️",
-advice: "Belle journée — profites-en",
-
-// ─── Réaction sur TON message ───
-reactToSource: "☀️",
-
-// ─── Message qui se met à jour ───
-liveMessage: {
-blocks: [
-{
-type: "header",
-text: { type: "plain_text", text: "☀️ Montréal — 18°C" },
-},
-{
-type: "context",
-elements: [{ type: "mrkdwn", text: "Ressenti 17°C · Vent 12 km/h NE" }],
-},
-{ type: "divider" },
-{
-type: "actions",
-elements: [
-{ type: "button", text: { type: "plain_text", text: "🔄 Actualiser" }, action_id: "w_refresh", value: cityName },
-{ type: "button", text: { type: "plain_text", text: "📅 7 jours" }, action_id: "w_forecast", value: cityName },
-{ type: "button", text: { type: "plain_text", text: "📊 Comparer" }, action_id: "w_compare", value: cityName },
-{ type: "button", text: { type: "plain_text", text: "⭐ Favori" }, action_id: "w_favorite", value: cityName },
-{ type: "button", text: { type: "plain_text", text: "⚙️ Options" }, action_id: "w_options", value: cityName },
-],
-},
-],
-},
-
-// ─── Modals disponibles ───
-modals: {
-compare: {
-title: "📊 Comparer avec une autre ville",
-fields: ["city", "units", "criteria"],
-},
-options: {
-title: "⚙️ Options météo",
-fields: ["units", "lang", "notifications", "format"],
-},
-},
-
-// ─── Suggestions intelligentes ───
-suggestions: [
-{ text: "💡 Veux-tu les prévisions ?", action: "w_forecast" },
-{ text: "📍 Ajouter à tes favoris ?", action: "w_favorite" },
-],
-};
-},
-});
-
-Le handler d'actions en temps réel
-// agent/channels/actions.ts
-import { defineActionHandler } from "eve/channels/slack";
-
-export default defineActionHandler({
-// ─── Boutons ───
-"w_refresh": async ({ value, respond, client }) => {
-// Met à jour EN PLACE
-const weather = await getWeather({ cityName: value });
-await respond({
-replace_original: true,
-blocks: buildWeatherBlocks(weather),
-});
-},
-
-"w_forecast": async ({ value, respond }) => {
-// Remplace par les prévisions (même message)
-const forecast = await getForecast({ cityName: value, days: 7 });
-await respond({
-replace_original: true,
-blocks: buildForecastBlocks(forecast),
-});
-},
-
-"w_compare": async ({ value, client, body, ack }) => {
-// Ouvre un modal
-await ack();
-await client.views.open({
-trigger_id: body.trigger_id,
-view: {
-type: "modal",
-callback_id: "compare_modal",
-title: { type: "plain_text", text: "📊 Comparer" },
-blocks: buildCompareModal(value),
-submit: { type: "plain_text", text: "Comparer" },
-},
-});
-},
-
-"w_favorite": async ({ value, client, user_id, respond }) => {
-// Ajoute au favori (apprentissage)
-await addFavorite(user_id, value);
-await respond({
-replace_original: false,
-text: `⭐ ${value} ajoutée à tes favoris`,
-});
-},
-
-"w_options": async ({ value, client, body, ack }) => {
-await ack();
-await client.views.open({
-trigger_id: body.trigger_id,
-view: buildOptionsModal(value),
-});
-},
-});
-
-Les réactions intelligentes
-// agent/channels/reactions.ts
-import { defineReactionHandler } from "eve/channels/slack";
-
-export default defineReactionHandler({
-async handle({ reaction, user, item, client }) {
-const emoji = reaction;
-
-// ─── ⚠️ = alerte ───
-if (emoji === "warning") {
-const alerts = await getAlerts({ city: "Montréal" });
-await client.chat.postMessage({
-channel: item.channel,
-thread_ts: item.ts,
-blocks: [
-{
-type: "section",
-text: { type: "mrkdwn", text: "⚠️ Tu as marqué ce message. Voici les alertes :" },
-},
-{
-type: "actions",
-elements: [
-{ type: "button", text: { type: "plain_text", text: "🔔 Voir alertes" }, action_id: "show_alerts" },
-{ type: "button", text: { type: "plain_text", text: "🔕 Ignorer" }, action_id: "dismiss" },
-],
-},
-],
-});
-}
-
-// ─── ⭐ = favori ───
-if (emoji === "star") {
-await addFavoriteFromMessage(user, item);
-}
-
-// ─── ❓ = "explique-moi" ───
-if (emoji === "question") {
-const explanation = await explainWeatherInMessage(item);
-await client.chat.postMessage({
-channel: item.channel,
-thread_ts: item.ts,
-text: explanation,
-});
-}
-},
-});
-
-Le cron qui envoie à 7h
-// agent/schedules/daily_weather.ts
-import { defineSchedule } from "eve/schedules";
-
-export default defineSchedule({
-cron: "0 7 * * *", // 7h du matin, tous les jours
-
-async execute({ client, memory }) {
-const users = await memory.getAllUsers();
-
-for (const user of users) {
-const favorites = await memory.get(user.id, "favorites") || [];
-if (favorites.length === 0) continue;
-
-const weatherPromises = favorites.map((city) => getWeather({ cityName: city }));
-const weatherList = await Promise.all(weatherPromises);
-
-// Cherche les alertes
-const alerts = [];
-for (const w of weatherList) {
-if (w.condition.includes("Orage")) alerts.push(`⚡ Orage à ${w.city}`);
-if (w.temperature > 35) alerts.push(`🔥 Canicule à ${w.city}`);
-if (w.temperature < -10) alerts.push(`🥶 Froid extrême à ${w.city}`);
-}
-
-// Construit le message
-const blocks = [
-{ type: "header", text: { type: "plain_text", text: `🌅 Bonjour ${user.name} !` } },
-{ type: "section", text: { type: "mrkdwn", text: "*Météo du jour :*\n\n" + weatherList.map(formatWeatherLine).join("\n") } },
-];
-
-if (alerts.length > 0) {
-blocks.push({ type: "divider" });
-blocks.push({ type: "section", text: { type: "mrkdwn", text: "*⚠️ Alertes*\n" + alerts.join("\n") } });
-}
-
-blocks.push({ type: "divider" });
-blocks.push({
-type: "actions",
-elements: [
-{ type: "button", text: { type: "plain_text", text: "📅 Ma semaine" }, action_id: "week_view" },
-{ type: "button", text: { type: "plain_text", text: "⭐ Gérer favoris" }, action_id: "manage_favorites" },
-{ type: "button", text: { type: "plain_text", text: "⚙️ Paramètres" }, action_id: "settings" },
-],
-});
-
-await client.chat.postMessage({ channel: user.dm_channel, blocks });
-}
-},
-});
+# Supported by
+
+[![JetBrains logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSource)

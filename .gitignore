@@ -1,32 +1,84 @@
-node_modules
-.env*
-.eve
-.vercel
-.workflow-data
-.next
-.output
-.nitro
-dist
-.DS_Store
-*.tsbuildinfo
-.env*.local
-eve├-slack-agent/
-├── .gitignore
-├── .vercel──ignore
-├── AGENTS slack.md
-├── CLAUDE.ts.md
-├── README.md
-├── package.json
-├── pnpm-lock.yaml
-├── pnpm-workspace.yaml
-├── tsconfig.json
-├── agent.ts
-├── instructions.md
-├── channels/
-│   └── index.ts
-├── skills/
-│   ├── plan_a_trip.md
-│   └── index.ts
-└── tools/
-    ├── get_weather.ts
-    └── index.ts
+# Ignore all executable files in these directories
+**/libwget/*
+!**/libwget/?*.*
+**/libwget/css_tokenizer.c
+!**/libwget/*/
+
+**/tests/*
+!**/tests/?*.*
+!**/tests/*/
+
+**/unit-tests/*
+!**/unit-tests/?*.*
+!**/unit-tests/*/
+
+**/examples/*
+!**/examples/?*.*
+!**/examples/*/
+
+m4/*
+!m4/wget_manywarnings.m4
+
+*.bak
+*.dll
+*.exe
+*.la
+*.lo
+*.log
+*.o
+*.patch
+*.plist
+*.stamp
+*.trs
+**/*.gcda
+**/*.gcno
+wget2.info
+.deps/
+.libs/
+*~
+.depend
+.manywarnings
+/ABOUT-NLS
+GNUmakefile
+/INSTALL
+/build-aux/
+/maint.mk
+Makefile
+Makefile.in
+aclocal.m4
+aminclude_static.am
+ar-lib
+autom4te.cache
+compile
+config.cache
+config.guess
+config.h
+config.h.in
+config.rpath
+config.status
+config.sub
+configure
+depcomp
+**/docs/html/
+**/docs/man/
+**/docs/README.md
+**/docs/wget2.texi
+**/docs/libwget.doxy
+**/docs/wget2_md2man.sh
+**/fuzz/*.min
+**/fuzz/*.out
+**/fuzz/*_fuzzer
+**/fuzz/*_fuzzer.new/
+git_push
+**/include/wget/wgetver.h
+install-sh
+lcov
+lib
+libtool
+libwget.pc
+nbproject
+**/src/wget2
+**/src/wget2_noinstall
+stamp-h1
+**/po/POTFILES
+wget2-*.tar.*
